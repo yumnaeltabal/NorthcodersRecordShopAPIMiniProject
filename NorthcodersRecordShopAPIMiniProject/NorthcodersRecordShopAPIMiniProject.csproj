@@ -8,8 +8,16 @@
 
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.5.2" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.15" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Services\" />
+    <Folder Include="Migrations\" />
+    <Folder Include="Middleware\" />
   </ItemGroup>
 
 </Project>
