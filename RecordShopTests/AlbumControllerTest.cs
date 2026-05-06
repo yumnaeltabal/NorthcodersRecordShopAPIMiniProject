@@ -57,5 +57,16 @@ namespace RecordShopTests
             var actual = (NotFoundResult)_albumController.GetAlbumById(1);
             actual.StatusCode.ShouldBe(404);
         }
+        [Test]
+        public void PostNewAlbumTest()
+        {
+            var album = new Album("Test Album", "Test Artist", 2000, "Test Genre") { Id = 1 };
+            _mockAlbumService
+                            .Setup(service => service.PostNewAlbum(album))
+                            .Returns(album);
+            var actual = (CreatedAtActionResult)_albumController.PostNewAlbum(album);
+            actual.StatusCode.ShouldBe(201);
+            actual.Value.ShouldBe(album);
+        }
     }
 }
