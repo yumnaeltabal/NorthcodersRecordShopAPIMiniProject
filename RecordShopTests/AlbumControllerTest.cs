@@ -99,5 +99,15 @@ namespace RecordShopTests
             actual.StatusCode.ShouldBe(200);
             actual.Value.ShouldBe(album);
         }
+        [Test]
+        public void UpdateAnAlbum_NotFoundTest()
+        {
+            var album = new Album("Test Album", "Test Artist", 2000, "Test Genre") { Id = 1 };
+            _mockAlbumService
+                            .Setup(service => service.UpdateAnAlbum(1, album))
+                            .Returns((Album)null);
+            var actual = (NotFoundResult)_albumController.UpdateAnAlbum(1, album);
+            actual.StatusCode.ShouldBe(404);
+        }
     }
 }

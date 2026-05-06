@@ -116,5 +116,17 @@ namespace RecordShopTests
             var okResult = result as OkObjectResult;
             okResult.Value.ShouldBe(updatedAlbum);
         }
+        [Test]
+        public void UpdateAnAlbum_NotFoundTest()
+        {
+            var updatedAlbum = new Album("Updated Album", "Updated Artist", 2020, "Updated Genre") { Id = 1 };
+            _mockAlbumService
+                            .Setup(service => service.UpdateAnAlbum(1, updatedAlbum))
+                            .Returns((Album)null);
+            var result = _albumController.UpdateAnAlbum(1, updatedAlbum);
+            result.ShouldBeOfType<NotFoundResult>();
+            var notFoundResult = result as NotFoundResult;
+            notFoundResult.StatusCode.ShouldBe(404);
+        }
     }
 }
