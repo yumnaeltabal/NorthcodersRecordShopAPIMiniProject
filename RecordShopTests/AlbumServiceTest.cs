@@ -55,5 +55,18 @@ namespace RecordShopTests
             var okResult = result as OkObjectResult;
             okResult.Value.ShouldBe(album);
         }
+        [Test]
+        public void GetAlbumById_NotFoundTest()
+        {
+            _mockAlbumService
+                            .Setup(service => service.GetAlbumById(1))
+                            .Returns((Album)null);
+            var result = _albumController.GetAlbumById(1);
+
+            result.ShouldBeOfType<NotFoundResult>();
+
+            var notFoundResult = result as NotFoundResult;
+            notFoundResult.StatusCode.ShouldBe(404);
+        }
     }
 }
