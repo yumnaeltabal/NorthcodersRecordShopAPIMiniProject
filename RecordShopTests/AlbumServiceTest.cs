@@ -81,6 +81,16 @@ namespace RecordShopTests
             createdAtActionResult.Value.ShouldBe(album);
         }
         [Test]
+        public void PostNewAlbumTest_WithWrongModel()
+        {
+            var album = new Album("", "", 0, "") { Id = 1 };
+            _albumController.ModelState.AddModelError("Name", "Name is required");
+            var result = _albumController.PostNewAlbum(album);
+            result.ShouldBeOfType<BadRequestObjectResult>();
+            var badRequestResult = result as BadRequestObjectResult;
+            badRequestResult.StatusCode.ShouldBe(400);
+        }
+        [Test]
         public void DeleteAnAlbumTest()
         {
             var album = new Album("Test Album", "Test Artist", 2000, "Test Genre") { Id = 1 };
