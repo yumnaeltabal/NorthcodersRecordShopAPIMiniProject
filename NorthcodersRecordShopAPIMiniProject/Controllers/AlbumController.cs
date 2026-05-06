@@ -11,18 +11,29 @@ namespace NorthcodersRecordShopAPIMiniProject.Controllers
     [ApiController]
     public class AlbumController : ControllerBase
     {
-        private readonly AlbumService _albumService;
+        private readonly IAlbumService _albumService;
 
-        public AlbumController(AlbumService albumService)
+        public AlbumController(IAlbumService albumService)
         {
             _albumService = albumService;
         }
 
         [HttpGet]
-        [OutputCache]
-        public List<Album> GetAllAlbums()
+        public IActionResult GetAllAlbums()
         {
-            return _albumService.GetAllAlbums();
+            var albums = _albumService.GetAllAlbums();
+            return Ok(albums);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetAlbumById(int id)
+        {
+            var album = _albumService.GetAlbumById(id);
+            if (album == null)
+            {
+                return NotFound();
+            }
+            return Ok(album);
         }
     }
 }
