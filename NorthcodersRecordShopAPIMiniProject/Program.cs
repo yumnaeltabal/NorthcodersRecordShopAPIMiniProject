@@ -26,15 +26,19 @@ namespace NorthcodersRecordShopAPIMiniProject
             builder.Services.AddControllers();
             builder.Services.AddScoped<IAlbumService, AlbumService>();
             builder.Services.AddScoped<IAlbumModel, AlbumRepository>();
+            builder.Services.AddDbContext<AlbumsDbContext>(options =>
+                options.UseSqlServer(connectionString));
+
             //builder.Services.AddDbContext<AlbumsDbContext>(options =>
             //{
             //    var connection = new SqliteConnection(connectionString);
             //    connection.Open();
-            //    options.UseSqlServer(connection.ConnectionString);
+            //    options.UseSqlite(connection);
             //});
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             var app = builder.Build();
+
 
             //FOR THE http REQUESTS
             if (app.Environment.IsDevelopment())

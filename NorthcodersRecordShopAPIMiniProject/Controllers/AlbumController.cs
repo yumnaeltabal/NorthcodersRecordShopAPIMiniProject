@@ -34,5 +34,21 @@ namespace NorthcodersRecordShopAPIMiniProject.Controllers
             }
             return Ok(album);
         }
+        [HttpPost]
+        public IActionResult PostNewAlbum(Album album)
+        {
+            var newAlbum = _albumService.PostNewAlbum(album);
+            return CreatedAtAction(nameof(GetAlbumById), new { id = newAlbum.Id }, newAlbum);
+        }
+        [HttpDelete("{id}")]
+        public IActionResult DeleteAnAlbum(int id)
+        {
+            var deletedAlbum = _albumService.DeleteAnAlbum(id);
+            if (deletedAlbum == null)
+            {
+                return NotFound();
+            }
+            return Ok(deletedAlbum);
+        }
     }
 }

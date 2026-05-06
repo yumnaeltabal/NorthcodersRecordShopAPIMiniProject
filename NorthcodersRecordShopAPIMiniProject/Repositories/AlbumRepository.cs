@@ -9,6 +9,8 @@ namespace NorthcodersRecordShopAPIMiniProject.Repositories
     {
         public List<Album> GetAllAlbums();
         public Album GetAlbumById(int id);
+        public Album PostNewAlbum(Album album);
+        public Album DeleteAnAlbum(int id);
     }
     public class AlbumRepository : IAlbumModel
     {
@@ -38,6 +40,51 @@ namespace NorthcodersRecordShopAPIMiniProject.Repositories
             //List<Album> albums = JsonSerializer.Deserialize<List<Album>>(albumsFile);
 
             //return albums.FirstOrDefault(album => album.Id == id);
+        }
+        public Album PostNewAlbum(Album album)
+        {
+            using (_db)
+            {
+                _db.Add(album);
+                _db.SaveChanges();
+                return _db.Albums.ToList().Where(a => a.Artist == album.Artist && a.Title == album.Title).FirstOrDefault();
+            }
+            //var albumsFile = File.ReadAllText("Resources\\Albums.json");
+            //List<Album> albums = JsonSerializer.Deserialize<List<Album>>(albumsFile);
+            //var newAlbum = new Album
+            //{
+            //    Id = albums.Max(album => album.Id) + 1,
+            //    Title = "New Album",
+            //    Artist = "New Artist",
+            //    Genre = "New Genre",
+            //};
+            //albums.Add(newAlbum);
+            //string updatedAlbumsJson = JsonSerializer.Serialize(albums, new JsonSerializerOptions { WriteIndented = true });
+            //File.WriteAllText("Resources\\Albums.json", updatedAlbumsJson);
+            //return newAlbum;
+        }
+        public Album DeleteAnAlbum(int id)
+        {
+            using (_db)
+            {
+                var albumToDelete = _db.Albums.Find(id);
+                if (albumToDelete != null)
+                {
+                    _db.Albums.Remove(albumToDelete);
+                    _db.SaveChanges();
+                }
+                return albumToDelete;
+            }
+            //var albumsFile = File.ReadAllText("Resources\\Albums.json");
+            //List<Album> albums = JsonSerializer.Deserialize<List<Album>>(albumsFile);
+            //var albumToDelete = albums.FirstOrDefault(album => album.Id == id);
+            //if (albumToDelete != null)
+            //{
+            //    albums.Remove(albumToDelete);
+            //    string updatedAlbumsJson = JsonSerializer.Serialize(albums, new JsonSerializerOptions { WriteIndented = true });
+            //    File.WriteAllText("Resources\\Albums.json", updatedAlbumsJson);
+            //}
+            //return albumToDelete;
         }
     }
 }
