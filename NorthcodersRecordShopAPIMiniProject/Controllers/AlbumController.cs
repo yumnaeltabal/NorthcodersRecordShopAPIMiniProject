@@ -37,8 +37,13 @@ namespace NorthcodersRecordShopAPIMiniProject.Controllers
         [HttpPost]
         public IActionResult PostNewAlbum(Album album)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var newAlbum = _albumService.PostNewAlbum(album);
-            return CreatedAtAction(nameof(GetAlbumById), new { id = newAlbum.Id }, newAlbum);
+
+            return CreatedAtAction(nameof(GetAlbumById),new { id = newAlbum.Id },newAlbum);
         }
         [HttpDelete("{id}")]
         public IActionResult DeleteAnAlbum(int id)
