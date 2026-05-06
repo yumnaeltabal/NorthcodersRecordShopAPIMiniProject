@@ -38,5 +38,22 @@ namespace RecordShopTests
             var okResult = result as OkObjectResult;
             okResult.Value.ShouldBe(albumsList);
         }
+        [Test]
+        public void GetAlbumByIdTest()
+        {
+            var album = new Album("Test Album", "Test Artist", 2000, "Test Genre") { Id = 1 };
+            var albumsList = new List<Album> { album };
+
+            _mockAlbumService
+                            .Setup(service => service.GetAlbumById(1))
+                            .Returns(album);
+
+            var result = _albumController.GetAlbumById(1);
+
+            result.ShouldBeOfType<OkObjectResult>();
+
+            var okResult = result as OkObjectResult;
+            okResult.Value.ShouldBe(album);
+        }
     }
 }
