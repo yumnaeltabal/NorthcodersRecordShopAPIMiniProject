@@ -50,5 +50,15 @@ namespace NorthcodersRecordShopAPIMiniProject.Controllers
             }
             return Ok(deletedAlbum);
         }
+        [HttpPatch("{id}")]
+        public IActionResult UpdateAnAlbum(int id, Album updatedAlbum)
+        {
+            var album = _albumService.UpdateAnAlbum(id, updatedAlbum);
+            if (album == null)
+            {
+                return NotFound();
+            }
+            return Ok(album);
+        }
     }
 }

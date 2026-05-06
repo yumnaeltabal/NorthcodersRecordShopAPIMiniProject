@@ -11,6 +11,7 @@ namespace NorthcodersRecordShopAPIMiniProject.Repositories
         public Album GetAlbumById(int id);
         public Album PostNewAlbum(Album album);
         public Album DeleteAnAlbum(int id);
+        public Album UpdateAnAlbum(int id, Album updatedAlbum);
     }
     public class AlbumRepository : IAlbumModel
     {
@@ -85,6 +86,33 @@ namespace NorthcodersRecordShopAPIMiniProject.Repositories
             //    File.WriteAllText("Resources\\Albums.json", updatedAlbumsJson);
             //}
             //return albumToDelete;
+        }
+        public Album UpdateAnAlbum(int id, Album updatedAlbum)
+        {
+            using (_db)
+            {
+                var albumToUpdate = _db.Albums.Find(id);
+                if (albumToUpdate != null)
+                {
+                    albumToUpdate.Title = updatedAlbum.Title;
+                    albumToUpdate.Artist = updatedAlbum.Artist;
+                    albumToUpdate.Genre = updatedAlbum.Genre;
+                    _db.SaveChanges();
+                }
+                return albumToUpdate;
+            }
+            //var albumsFile = File.ReadAllText("Resources\\Albums.json");
+            //List<Album> albums = JsonSerializer.Deserialize<List<Album>>(albumsFile);
+            //var albumToUpdate = albums.FirstOrDefault(album => album.Id == id);
+            //if (albumToUpdate != null)
+            //{
+            //    albumToUpdate.Title = updatedAlbum.Title;
+            //    albumToUpdate.Artist = updatedAlbum.Artist;
+            //    albumToUpdate.Genre = updatedAlbum.Genre;
+            //    string updatedAlbumsJson = JsonSerializer.Serialize(albums, new JsonSerializerOptions { WriteIndented = true });
+            //    File.WriteAllText("Resources\\Albums.json", updatedAlbumsJson);
+            //}
+            //return albumToUpdate;
         }
     }
 }
