@@ -79,5 +79,14 @@ namespace RecordShopTests
             actual.StatusCode.ShouldBe(200);
             actual.Value.ShouldBe(album);
         }
+        [Test]
+        public void DeleteAnAlbum_NotFoundTest()
+        {
+            _mockAlbumService
+                            .Setup(service => service.DeleteAnAlbum(1))
+                            .Returns((Album)null);
+            var actual = (NotFoundResult)_albumController.DeleteAnAlbum(1);
+            actual.StatusCode.ShouldBe(404);
+        }
     }
 }

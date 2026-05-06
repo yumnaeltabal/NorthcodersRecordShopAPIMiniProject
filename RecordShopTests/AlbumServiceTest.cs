@@ -92,5 +92,16 @@ namespace RecordShopTests
             var okResult = result as OkObjectResult;
             okResult.Value.ShouldBe(album);
         }
+        [Test]
+        public void DeleteAnAlbum_NotFoundTest()
+        {
+            _mockAlbumService
+                            .Setup(service => service.DeleteAnAlbum(1))
+                            .Returns((Album)null);
+            var result = _albumController.DeleteAnAlbum(1);
+            result.ShouldBeOfType<NotFoundResult>();
+            var notFoundResult = result as NotFoundResult;
+            notFoundResult.StatusCode.ShouldBe(404);
+        }
     }
 }
