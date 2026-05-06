@@ -8,5 +8,12 @@
         public int ReleaseYear { get; set; }
         public string Genre { get; set; }
 
+        public Album( string title, string artist, int releaseYear, string genre)
+        {
+            Title = title;
+            Artist = artist;
+            ReleaseYear = releaseYear;
+            Genre = genre;
+        }
     }
 }

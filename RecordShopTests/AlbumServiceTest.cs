@@ -1,0 +1,42 @@
+using Microsoft.AspNetCore.Mvc;
+using NorthcodersRecordShopAPIMiniProject.Controllers;
+using NorthcodersRecordShopAPIMiniProject.Repositories;
+using NorthcodersRecordShopAPIMiniProject.Services;
+using NorthcodersRecordShopAPIMiniProject.Models;
+using Moq;
+using Shouldly;
+
+namespace RecordShopTests
+{
+    public class Tests
+    {
+        private AlbumController _albumController;
+        private Mock<IAlbumService> _mockAlbumService;
+
+        [SetUp]
+        public void Setup()
+        {
+            _mockAlbumService = new Mock<IAlbumService>();
+            _albumController = new AlbumController(_mockAlbumService.Object);
+        }
+
+
+        [Test]
+        public void GetAlbumsTest()
+        {
+            var album = new Album("Test Album", "Test Artist", 2000, "Test Genre");
+            var albumsList = new List<Album> { album };
+
+            _mockAlbumService
+                            .Setup(service => service.GetAllAlbums())
+                            .Returns(albumsList);
+
+            var result = _albumController.GetAllAlbums();
+
+            result.ShouldBeOfType<OkObjectResult>();
+
+            var okResult = result as OkObjectResult;
+            okResult.Value.ShouldBe(albumsList);
+        }
+    }
+}
