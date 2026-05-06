@@ -68,5 +68,16 @@ namespace RecordShopTests
             actual.StatusCode.ShouldBe(201);
             actual.Value.ShouldBe(album);
         }
+        [Test]
+        public void DeleteAnAlbumTest()
+        {
+            var album = new Album("Test Album", "Test Artist", 2000, "Test Genre") { Id = 1 };
+            _mockAlbumService
+                            .Setup(service => service.DeleteAnAlbum(1))
+                            .Returns(album);
+            var actual = (OkObjectResult)_albumController.DeleteAnAlbum(1);
+            actual.StatusCode.ShouldBe(200);
+            actual.Value.ShouldBe(album);
+        }
     }
 }

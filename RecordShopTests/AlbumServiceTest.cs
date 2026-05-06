@@ -80,5 +80,17 @@ namespace RecordShopTests
             var createdAtActionResult = result as CreatedAtActionResult;
             createdAtActionResult.Value.ShouldBe(album);
         }
+        [Test]
+        public void DeleteAnAlbumTest()
+        {
+            var album = new Album("Test Album", "Test Artist", 2000, "Test Genre") { Id = 1 };
+            _mockAlbumService
+                            .Setup(service => service.DeleteAnAlbum(1))
+                            .Returns(album);
+            var result = _albumController.DeleteAnAlbum(1);
+            result.ShouldBeOfType<OkObjectResult>();
+            var okResult = result as OkObjectResult;
+            okResult.Value.ShouldBe(album);
+        }
     }
 }
